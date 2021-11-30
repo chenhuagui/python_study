@@ -9,6 +9,15 @@ import selenium.webdriver.support.expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 import threading
+import uuid
+
+version = "1.0.0"
+
+
+def get_mac_address():
+    node = uuid.getnode()
+    mac = uuid.UUID(int = node).hex[-12:]
+    return mac
 
 
 def execute_it():
@@ -95,13 +104,13 @@ main_thread = None
 
 # 创建UI界面
 window = tk.Tk()
-window.title('格式转换')
+window.title('标题')
 window.geometry('450x300')
 window.resizable(False, False)
 
-version_label = tk.Label(window, text='格式转换').place(x=10, y=10)
+version_label = tk.Label(window, text='Version: %s' % version).place(x=10, y=10)
 
-uuid_label = tk.Label(window, text='输入文件:').place(x=10, y=50)
+uuid_label = tk.Label(window, text='UUID: %s' % get_mac_address()).place(x=10, y=50)
 
 start_button_text = tk.StringVar()
 start_button = tk.Button(window, textvariable=start_button_text, command=lambda: thread_it(execute_it)).place(x=150, y=100)
